@@ -25,7 +25,7 @@ resource "aws_acm_certificate" "aws" {
 
 resource "aws_route53_record" "this" {
   count = var.module_enabled ? var.alternative_domains_count + 1 : 0
-
+  allow_overwrite = true
   # count   = "${ var.module_enabled && var.aws_issued_cert && ! var.imported_cert ? length(aws_acm_certificate.aws.0.domain_validation_options) : 0 }"
   name    = aws_acm_certificate.aws.0.domain_validation_options[count.index]["resource_record_name"]
   type    = aws_acm_certificate.aws.0.domain_validation_options[count.index]["resource_record_type"]
